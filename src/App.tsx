@@ -83,7 +83,14 @@ function App() {
           }
         }
       });
+
+      return;
     }
+
+    MiniAppEvents.sendMessage({
+      messageType: "console",
+      data: "Normal Camera",
+    });
   };
 
   return (

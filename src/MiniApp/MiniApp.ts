@@ -1,20 +1,18 @@
-import MiniAppEvents from './miniapp-events';
+import MiniAppEvents from "./miniapp-events";
 // https://developer.vodapay.vodacom.co.za/docs/miniprogram_vodacom/mpdev/component_open_web-view
 
 export type MessageData = {
-    messageType: string;
-    data?: string;
-    maxSize?: number;
-  };
+  messageType: "selfie" | "console" | "hide_loading";
+  data?: string;
+  maxSize?: number;
+};
 
 declare global {
   interface Window {
-    sendMessage: (data:MessageData ) => void;
+    sendMessage: (data: MessageData) => void;
     // chooseImage: any;
   }
 }
-
-
 
 //MINI: Class for interfacing with MiniApp functionality
 class MiniApp {
@@ -30,7 +28,7 @@ class MiniApp {
 
   _run() {
     window.setTimeout(() => {
-      if ('my' in window) {
+      if ("my" in window) {
         this._initialized = true;
         this._timeout = 0;
 
@@ -63,8 +61,13 @@ class MiniApp {
 
   listenForMessage(func: (observer: MutationObserver) => void) {
     //MINI: Listen for change to imageURL element to determine when message is received
-    const targetNode = document.getElementById('messageReceiveListener')!;
-    const config = { attributes: true, childList: true, subtree: true, characterData: true };
+    const targetNode = document.getElementById("messageReceiveListener")!;
+    const config = {
+      attributes: true,
+      childList: true,
+      subtree: true,
+      characterData: true,
+    };
     const observer = new MutationObserver(function () {
       func(observer);
     });
@@ -82,7 +85,7 @@ class MiniApp {
   //MINI: Read message from session storage
   read() {
     try {
-      const message = sessionStorage.getItem('message');
+      const message = sessionStorage.getItem("message");
       return message ? JSON.parse(message) : null;
     } catch (e) {
       console.error(e);
@@ -95,10 +98,10 @@ class MiniApp {
     if (element) {
       if (open) {
         clearTimeout(this._currentTimeout);
-        element.classList.add('keyboard-padding');
+        element.classList.add("keyboard-padding");
       } else {
         this._currentTimeout = window.setTimeout(
-          () => element!.classList.remove('keyboard-padding'),
+          () => element!.classList.remove("keyboard-padding"),
           100,
         );
       }
@@ -109,7 +112,7 @@ class MiniApp {
   downloadBase64FileURL(url: string) {
     return new Promise<string>((resolve, reject) => {
       const request = new XMLHttpRequest();
-      request.open('POST', url, true);
+      request.open("POST", url, true);
       request.onload = () => {
         MiniAppEvents.hideLoading();
         const response = JSON.parse(request.response);

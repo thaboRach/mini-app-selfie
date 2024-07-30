@@ -1,5 +1,4 @@
-import objMiniApp, { MessageData } from './MiniApp';
-
+import objMiniApp, { MessageData } from "./MiniApp";
 
 type ReadMessageData = {
   type: string;
@@ -47,17 +46,17 @@ const MiniAppEvents = {
     })!;
   },
   isInMiniApp: () => {
-    return sessionStorage.getItem('inMiniProgram') === 'true';
+    return sessionStorage.getItem("inMiniProgram") === "true";
   },
   isiOS: () => {
-    return sessionStorage.getItem('platform') === 'iOS';
+    return sessionStorage.getItem("platform") === "iOS";
   },
   isAndroid: () => {
-    return sessionStorage.getItem('platform') === 'Android';
+    return sessionStorage.getItem("platform") === "Android";
   },
   hideLoading: () => {
     MiniAppEvents.sendMessage({
-      messageType: 'hide_loading',
+      messageType: "hide_loading",
     });
   },
 };

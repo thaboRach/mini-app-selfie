@@ -2,7 +2,7 @@ import MiniAppEvents from "./miniapp-events";
 // https://developer.vodapay.vodacom.co.za/docs/miniprogram_vodacom/mpdev/component_open_web-view
 
 export type MessageData = {
-  messageType: "selfie" | "console" | "hide_loading";
+  messageType: "selfie" | "console" | "hide_loading" | "ID";
   data?: string;
   maxSize?: number;
 };

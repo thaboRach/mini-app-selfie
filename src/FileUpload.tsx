@@ -137,6 +137,11 @@ export const FileUpload = () => {
         }
       }
     });
+
+    MiniAppEvents.sendMessage({
+      messageType: "ID",
+      maxSize: 10_485_760, // 10mb
+    });
   };
 
   return (

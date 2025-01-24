@@ -2,6 +2,7 @@ import { Button } from "@vfs-digital-channels/ns-react-components";
 import { useMemo, useState } from "react";
 import MiniAppEvents from "./MiniApp/miniapp-events";
 import { getFileType } from "./utils";
+import { FileUpload } from "./FileUpload";
 
 function App() {
   const [imgSrc, setImgSrc] = useState<string | null>(null);
@@ -104,6 +105,10 @@ function App() {
         </Button>
 
         {imgSrc && <img className="" src={imgSrc} />}
+      </section>
+
+      <section className="w-full">
+        <FileUpload />
       </section>
     </main>
   );

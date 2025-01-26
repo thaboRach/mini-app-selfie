@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import MiniAppEvents from "./MiniApp/miniapp-events";
 
@@ -115,9 +115,6 @@ export const FileUpload = () => {
                 }),
               });
 
-            newFiles.push(file);
-            // setCurrentFiles(newFiles);
-
             inMiniApp &&
               MiniAppEvents.sendMessage({
                 messageType: "console",
@@ -125,6 +122,10 @@ export const FileUpload = () => {
                   message: "newFiles",
                   current: currentFiles,
                   new: newFiles,
+                  extra: {
+                    name: file.name,
+                    type: file.type,
+                  },
                 }),
               });
           })
@@ -154,6 +155,14 @@ export const FileUpload = () => {
       }
     });
   };
+
+  useEffect(() => {
+    inMiniApp &&
+      MiniAppEvents.sendMessage({
+        messageType: "console",
+        data: "There was a change in current files",
+      });
+  }, [currentFiles, inMiniApp]);
 
   return (
     <section className="flex flex-col items-center w-full gap-8 mt-10">

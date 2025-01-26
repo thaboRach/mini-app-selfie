@@ -27,6 +27,7 @@ export const FileUpload = () => {
 
     setCurrentFiles(f);
   }, []);
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   const getFileType = (base64: string): FileType => {
@@ -80,7 +81,7 @@ export const FileUpload = () => {
           }),
         });
 
-      if (message.url && message.type === "ID") {
+      if (message.url) {
         MiniAppEvents.downloadBase64FileURL(message.url)
           .then((res) => {
             inMiniApp &&

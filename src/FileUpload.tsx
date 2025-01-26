@@ -160,7 +160,10 @@ export const FileUpload = () => {
     inMiniApp &&
       MiniAppEvents.sendMessage({
         messageType: "console",
-        data: "There was a change in current files",
+        data: JSON.stringify({
+          message: "There was a change in current files",
+          data: currentFiles.map((file: File) => file.name),
+        }),
       });
   }, [currentFiles, inMiniApp]);
 

@@ -123,15 +123,15 @@ export const FileUpload = () => {
                     data: JSON.stringify({
                       message: "file",
                       data: file,
-                      new: {
-                        ...file,
-                        name: file.name,
-                        arrayBuffer: file.arrayBuffer,
+                      file: {
+                        name: messageNameAndType,
+                        fileType: fileType,
+                        base64Data: base64Data,
                       },
                     }),
                   });
 
-                // newFiles.push(file);
+                newFiles.push(file);
                 // setCurrentFiles(newFiles);
 
                 inMiniApp &&
@@ -139,17 +139,8 @@ export const FileUpload = () => {
                     messageType: "console",
                     data: JSON.stringify({
                       message: "newFiles",
-                      data: currentFiles,
+                      current: currentFiles,
                       new: newFiles,
-                    }),
-                  });
-
-                inMiniApp &&
-                  MiniAppEvents.sendMessage({
-                    messageType: "console",
-                    data: JSON.stringify({
-                      message: "currentFiles",
-                      data: currentFiles,
                     }),
                   });
               })

@@ -70,17 +70,18 @@ export const FileUpload = () => {
 
     MiniAppEvents.listenForMessage((observer) => {
       const message = MiniAppEvents.readMessage();
+
+      inMiniApp &&
+        MiniAppEvents.sendMessage({
+          messageType: "console",
+          data: JSON.stringify({
+            message: "message",
+            data: message,
+          }),
+        });
+
       if (message.type === "ID") {
         observer.disconnect();
-
-        inMiniApp &&
-          MiniAppEvents.sendMessage({
-            messageType: "console",
-            data: JSON.stringify({
-              message: "message",
-              data: message,
-            }),
-          });
 
         if (message.error) {
           // log the error

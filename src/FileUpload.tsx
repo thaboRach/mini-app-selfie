@@ -63,83 +63,109 @@ export const FileUpload = () => {
         data: "miniapp onClick",
       });
 
-    MiniAppEvents.listenForMessage(() => {
-      const message = MiniAppEvents.readMessage();
-      inMiniApp &&
-        MiniAppEvents.sendMessage({
-          messageType: "console",
-          data: JSON.stringify({
-            message: "message",
-            data: message,
-          }),
-        });
+    MiniAppEvents.sendMessage({
+      messageType: "ID",
+      maxSize: 10_485_760, // 10mb
+    });
 
-      if (message.error) {
-        // log the error
+    MiniAppEvents.listenForMessage((observer) => {
+      const message = MiniAppEvents.readMessage();
+      if (message.type === "ID") {
+        observer.disconnect();
+
         inMiniApp &&
           MiniAppEvents.sendMessage({
             messageType: "console",
             data: JSON.stringify({
-              message: "error uploading file",
+              message: "message",
+              data: message,
             }),
           });
-      } else {
-        if (message.url) {
-          MiniAppEvents.downloadBase64FileURL(message.url)
-            .then((res) => {
-              inMiniApp &&
-                MiniAppEvents.sendMessage({
-                  messageType: "console",
-                  data: JSON.stringify({
-                    message: "downloadBase64FileURL response",
-                    data: res,
-                  }),
-                });
 
-              const base64Data = res;
-
-              const fileType = getFileType(base64Data);
-
-              const messageNameAndType =
-                (message?.name ?? "").split(".")[0] + fileType.ext;
-              const file = base64ToFile(
-                base64Data,
-                messageNameAndType,
-                fileType.mime,
-              );
-              inMiniApp &&
-                MiniAppEvents.sendMessage({
-                  messageType: "console",
-                  data: JSON.stringify({
-                    message: "file",
-                    data: file,
-                    new: {
-                      ...file,
-                      name: file.name,
-                      arrayBuffer: file.arrayBuffer,
-                    },
-                  }),
-                });
-
-              newFiles.push(file);
-              setCurrentFiles(newFiles);
-            })
-            .catch((error) => {
-              inMiniApp &&
-                MiniAppEvents.sendMessage({
-                  messageType: "console",
-                  data: JSON.stringify({
-                    message: "catch block - error",
-                    data: error,
-                  }),
-                });
+        if (message.error) {
+          // log the error
+          inMiniApp &&
+            MiniAppEvents.sendMessage({
+              messageType: "console",
+              data: JSON.stringify({
+                message: "error uploading file",
+                data: message.error,
+              }),
             });
+        } else {
+          if (message.url) {
+            MiniAppEvents.downloadBase64FileURL(message.url)
+              .then((res) => {
+                inMiniApp &&
+                  MiniAppEvents.sendMessage({
+                    messageType: "console",
+                    data: JSON.stringify({
+                      message: "downloadBase64FileURL response",
+                      data: res,
+                    }),
+                  });
+
+                const base64Data = res;
+
+                const fileType = getFileType(base64Data);
+
+                const messageNameAndType =
+                  (message?.name ?? "").split(".")[0] + fileType.ext;
+                const file = base64ToFile(
+                  base64Data,
+                  messageNameAndType,
+                  fileType.mime,
+                );
+
+                inMiniApp &&
+                  MiniAppEvents.sendMessage({
+                    messageType: "console",
+                    data: JSON.stringify({
+                      message: "file",
+                      data: file,
+                      new: {
+                        ...file,
+                        name: file.name,
+                        arrayBuffer: file.arrayBuffer,
+                      },
+                    }),
+                  });
+
+                // newFiles.push(file);
+                // setCurrentFiles(newFiles);
+
+                inMiniApp &&
+                  MiniAppEvents.sendMessage({
+                    messageType: "console",
+                    data: JSON.stringify({
+                      message: "newFiles",
+                      data: currentFiles,
+                      new: newFiles,
+                    }),
+                  });
+
+                inMiniApp &&
+                  MiniAppEvents.sendMessage({
+                    messageType: "console",
+                    data: JSON.stringify({
+                      message: "currentFiles",
+                      data: currentFiles,
+                    }),
+                  });
+              })
+              .catch((error) => {
+                inMiniApp &&
+                  MiniAppEvents.sendMessage({
+                    messageType: "console",
+                    data: JSON.stringify({
+                      message: "catch block - error",
+                      data: error,
+                    }),
+                  });
+              });
+          }
         }
       }
-    });
-    MiniAppEvents.sendMessage({
-      messageType: "ID",
-      maxSize: 10_485_760, // 10mb
     });
   };
 

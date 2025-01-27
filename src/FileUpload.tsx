@@ -58,6 +58,7 @@ export const FileUpload = () => {
 
   const miniappOnClick = () => {
     const newFiles = currentFiles;
+
     inMiniApp &&
       MiniAppEvents.sendMessage({
         messageType: "console",
@@ -100,6 +101,9 @@ export const FileUpload = () => {
             const messageNameAndType =
               (message?.name ?? "").split(".")[0] + fileType.ext;
             const file = base64ToFile(base64Data, messageNameAndType, fileType.mime);
+
+            newFiles.push(file);
+            setCurrentFiles(newFiles);
 
             inMiniApp &&
               MiniAppEvents.sendMessage({

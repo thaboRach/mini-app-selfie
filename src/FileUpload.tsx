@@ -65,11 +65,6 @@ export const FileUpload = () => {
         data: "miniapp onClick",
       });
 
-    MiniAppEvents.sendMessage({
-      messageType: "ID",
-      maxSize: 10_485_760, // 10mb
-    });
-
     MiniAppEvents.listenForMessage((observer: MutationObserver) => {
       const message = MiniAppEvents.readMessage();
 
@@ -158,6 +153,11 @@ export const FileUpload = () => {
             }),
           });
       }
+    });
+
+    MiniAppEvents.sendMessage({
+      messageType: "ID",
+      maxSize: 10_485_760, // 10mb
     });
   };
 

@@ -118,6 +118,7 @@ export const FileUpload = () => {
 
               newFiles.push(file);
               setCurrentFiles(newFiles);
+              setCounter(currentFiles.length);
 
               inMiniApp &&
                 MiniAppEvents.sendMessage({

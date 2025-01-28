@@ -112,7 +112,10 @@ function App() {
       </section>
 
       {/* testing */}
-      <input id="messageReceiveListener" className="h-10 outline-none w-80"></input>
+      <input
+        id="messageReceiveListener"
+        className="h-10 text-black outline-none w-80"
+      ></input>
     </main>
   );
 }

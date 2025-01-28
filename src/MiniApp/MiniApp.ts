@@ -60,11 +60,6 @@ class MiniApp {
   }
 
   listenForMessage(func: (observer: MutationObserver) => void) {
-    this.send({
-      messageType: "console",
-      data: "logging: observing",
-    });
-
     //MINI: Listen for change to imageURL element to determine when message is received
     const targetNode = document.getElementById("messageReceiveListener")!;
     const config = {

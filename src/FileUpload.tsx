@@ -70,7 +70,7 @@ export const FileUpload = () => {
       maxSize: 10_485_760, // 10mb
     });
 
-    MiniAppEvents.listenForMessage(() => {
+    MiniAppEvents.listenForMessage((observer: MutationObserver) => {
       const message = MiniAppEvents.readMessage();
 
       inMiniApp &&
@@ -143,7 +143,8 @@ export const FileUpload = () => {
                 }),
               });
           });
-        // observer.disconnect();
+
+        observer.disconnect();
       }
 
       if (message.error) {

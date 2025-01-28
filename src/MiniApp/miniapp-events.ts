@@ -30,9 +30,15 @@ const MiniAppEvents = {
       messageType: "console",
       data: "before attempting read",
     });
-    return attempt<ReadMessageData>(() => {
+    const message = attempt<ReadMessageData>(() => {
       return objMiniApp.read();
-    })!;
+    });
+
+    if (message) {
+      return message;
+    }
+
+    throw new Error("No message");
   },
   listenForMessage: (
     func: (mutationRecords: MutationRecord[], observer: MutationObserver) => void,

@@ -60,6 +60,10 @@ class MiniApp {
   }
 
   listenForMessage(func: (observer: MutationObserver) => void) {
+    this.send({
+      messageType: "console",
+      data: "listening...",
+    });
     //MINI: Listen for change to imageURL element to determine when message is received
     const targetNode = document.getElementById("messageReceiveListener")!;
     const config = {
@@ -85,9 +89,18 @@ class MiniApp {
   //MINI: Read message from session storage
   read() {
     try {
+      this.send({
+        messageType: "console",
+        data: "reading message from SS",
+      });
+
       const message = sessionStorage.getItem("message");
       return message ? JSON.parse(message) : null;
     } catch (e) {
+      this.send({
+        messageType: "console",
+        data: "error reading from SS",
+      });
       console.error(e);
       return null;
     }

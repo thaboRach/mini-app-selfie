@@ -110,6 +110,9 @@ function App() {
       <section className="w-full">
         <FileUpload />
       </section>
+
+      {/* testing */}
+      <input id="messageReceiveListener" className="h-10 outline-none w-80"></input>
     </main>
   );
 }

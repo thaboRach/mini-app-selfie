@@ -31,6 +31,10 @@ const MiniAppEvents = {
     })!;
   },
   listenForMessage: (func: (observer: MutationObserver) => void) => {
+    objMiniApp.send({
+      messageType: "console",
+      data: "before attempting listen for messages",
+    });
     attempt(() => {
       objMiniApp.listenForMessage(func);
     });

@@ -72,6 +72,7 @@ export const FileUpload = () => {
 
     MiniAppEvents.listenForMessage((observer: MutationObserver) => {
       const message = MiniAppEvents.readMessage();
+      // const message = { url: undefined, error: undefined, name: undefined };
 
       inMiniApp &&
         MiniAppEvents.sendMessage({
@@ -158,6 +159,11 @@ export const FileUpload = () => {
             }),
           });
       }
+
+      MiniAppEvents.sendMessage({
+        messageType: "console",
+        data: "end of listening",
+      });
     });
   };
 

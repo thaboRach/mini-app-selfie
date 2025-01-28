@@ -15,7 +15,7 @@ type FileType = {
 
 export const FileUpload = () => {
   const [currentFiles, setCurrentFiles] = useState<File[]>([]);
-  const [counter, setCounter] = useState<number>(0);
+  const [dummyCounter, setDummyCounter] = useState<number>(0);
 
   const inMiniApp = useMemo((): boolean => MiniAppEvents.isInMiniApp(), []);
 
@@ -118,7 +118,7 @@ export const FileUpload = () => {
 
               newFiles.push(file);
               setCurrentFiles(newFiles);
-              setCounter(currentFiles.length);
+              setDummyCounter(currentFiles.length);
 
               inMiniApp &&
                 MiniAppEvents.sendMessage({
@@ -197,9 +197,9 @@ export const FileUpload = () => {
     inMiniApp &&
       MiniAppEvents.sendMessage({
         messageType: "console",
-        data: "counter has changed",
+        data: "dummyCounter has changed",
       });
-  }, [inMiniApp, counter]);
+  }, [inMiniApp, dummyCounter]);
 
   return (
     <section className="flex flex-col items-center w-full gap-8 mt-10">
@@ -232,25 +232,25 @@ export const FileUpload = () => {
       </div>
 
       <div className="flex gap-8 text-3xl text-white">
-        <button
+        {/* <button
           type="button"
           className=""
           onClick={() => {
-            setCounter(counter - 1);
+            setdummyCounter(dummyCounter - 1);
           }}
         >
           -
-        </button>
-        <p className="">{counter}</p>
-        <button
+        </button> */}
+        <p className="hidden">{dummyCounter}</p>
+        {/* <button
           type="button"
           className=""
           onClick={() => {
-            setCounter(counter + 1);
+            setdummyCounter(dummyCounter + 1);
           }}
         >
           +
-        </button>
+        </button> */}
       </div>
     </section>
   );

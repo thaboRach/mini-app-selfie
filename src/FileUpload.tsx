@@ -15,6 +15,7 @@ type FileType = {
 
 export const FileUpload = () => {
   const [currentFiles, setCurrentFiles] = useState<File[]>([]);
+  const [counter, setCounter] = useState<number>(0);
 
   const inMiniApp = useMemo((): boolean => MiniAppEvents.isInMiniApp(), []);
 
@@ -216,6 +217,28 @@ export const FileUpload = () => {
           currentFiles.map((file, index) => (
             <p key={index}>{`${index + 1} - ${file.name}`}</p>
           ))}
+      </div>
+
+      <div className="flex gap-8 text-3xl text-white">
+        <button
+          type="button"
+          className=""
+          onClick={() => {
+            setCounter(counter - 1);
+          }}
+        >
+          -
+        </button>
+        <p className="">{counter}</p>
+        <button
+          type="button"
+          className=""
+          onClick={() => {
+            setCounter(counter + 1);
+          }}
+        >
+          +
+        </button>
       </div>
     </section>
   );

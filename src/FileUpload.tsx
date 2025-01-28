@@ -18,7 +18,7 @@ export const FileUpload = () => {
   const [currentFiles, setCurrentFiles] = useState<File[]>([]);
   // const [dummyCounter, setDummyCounter] = useState<number>(0);
 
-  const eventEmitter = useEventEmitter();
+  // const eventEmitter = useEventEmitter();
 
   const inMiniApp = useMemo((): boolean => MiniAppEvents.isInMiniApp(), []);
 
@@ -121,8 +121,8 @@ export const FileUpload = () => {
 
               newFiles.push(file);
               // emit event
-              eventEmitter.emit(setCurrentFiles(newFiles));
-              // setCurrentFiles(newFiles);
+              // eventEmitter.emit(setCurrentFiles(newFiles));
+              setCurrentFiles(newFiles);
               // setDummyCounter(currentFiles.length);
 
               inMiniApp &&

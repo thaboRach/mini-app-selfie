@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import MiniAppEvents from "./MiniApp/miniapp-events";
-import { useEventEmitter } from "ahooks";
+// import { useEventEmitter } from "ahooks";
 
 enum FileTypes {
   jpeg = "image/jpeg",

@@ -193,6 +193,14 @@ export const FileUpload = () => {
       });
   }, [currentFiles, inMiniApp]);
 
+  useEffect(() => {
+    inMiniApp &&
+      MiniAppEvents.sendMessage({
+        messageType: "console",
+        data: "counter has changed",
+      });
+  }, [inMiniApp, counter]);
+
   return (
     <section className="flex flex-col items-center w-full gap-8 mt-10">
       <h3 className="text-3xl">Upload file</h3>
@@ -203,7 +211,7 @@ export const FileUpload = () => {
           event.stopPropagation();
           miniappOnClick();
         }}
-        className="w-6/12 h-40 gap-4 px-4 py-2 text-black bg-white outline-none cursor-pointer rounded-2xl"
+        className="gap-4 px-4 py-2 text-black bg-white outline-none cursor-pointer min-w-6/12 max-w-10/12 text-wrap min-h-40 rounded-2xl"
       >
         <input {...getInputProps()} />
         {isDragActive ? (
@@ -216,7 +224,10 @@ export const FileUpload = () => {
 
         {!!currentFiles.length &&
           currentFiles.map((file, index) => (
-            <p key={index}>{`${index + 1} - ${file.name}`}</p>
+            <>
+              <div className="w-full h-0.5 bg-gray-500/50" />
+              <p key={index}>{`${index + 1} - ${file.name}`}</p>
+            </>
           ))}
       </div>
 

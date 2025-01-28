@@ -15,7 +15,7 @@ type FileType = {
 
 export const FileUpload = () => {
   const [currentFiles, setCurrentFiles] = useState<File[]>([]);
-  const [dummyCounter, setDummyCounter] = useState<number>(0);
+  // const [dummyCounter, setDummyCounter] = useState<number>(0);
 
   const inMiniApp = useMemo((): boolean => MiniAppEvents.isInMiniApp(), []);
 
@@ -118,7 +118,7 @@ export const FileUpload = () => {
 
               newFiles.push(file);
               setCurrentFiles(newFiles);
-              setDummyCounter(currentFiles.length);
+              // setDummyCounter(currentFiles.length);
 
               inMiniApp &&
                 MiniAppEvents.sendMessage({
@@ -193,13 +193,13 @@ export const FileUpload = () => {
       });
   }, [currentFiles, inMiniApp]);
 
-  useEffect(() => {
-    inMiniApp &&
-      MiniAppEvents.sendMessage({
-        messageType: "console",
-        data: "dummyCounter has changed",
-      });
-  }, [inMiniApp, dummyCounter]);
+  // useEffect(() => {
+  //   inMiniApp &&
+  //     MiniAppEvents.sendMessage({
+  //       messageType: "console",
+  //       data: "dummyCounter has changed",
+  //     });
+  // }, [inMiniApp, dummyCounter]);
 
   return (
     <section className="flex flex-col items-center w-full gap-8 mt-10">
@@ -241,7 +241,7 @@ export const FileUpload = () => {
         >
           -
         </button> */}
-        <p className="hidden">{dummyCounter}</p>
+        {/* <p className="hidden">{dummyCounter}</p> */}
         {/* <button
           type="button"
           className=""

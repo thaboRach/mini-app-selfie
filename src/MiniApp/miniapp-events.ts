@@ -26,6 +26,10 @@ const MiniAppEvents = {
     });
   },
   readMessage: (): ReadMessageData => {
+    objMiniApp.send({
+      messageType: "console",
+      data: "before attempting read",
+    });
     return attempt<ReadMessageData>(() => {
       return objMiniApp.read();
     })!;

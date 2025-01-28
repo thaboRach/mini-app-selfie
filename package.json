@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@vfs-digital-channels/ns-react-components": "^2.4.26",
+    "ahooks": "^3.8.4",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "formik": "^2.4.6",

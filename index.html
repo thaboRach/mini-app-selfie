@@ -29,12 +29,12 @@
         //Store message in session storage, and then change messageReceiveListener innerText to trigger a mutation event to notify that a message has arrived.
         my.onMessage = function (e) { 
           sessionStorage.setItem('message', JSON.stringify(e)); 
-          document.getElementById('messageReceiveListener').innerText = e; 
+          document.getElementById('messageReceiveListener').innerText = JSON.stringify(e); 
 
-          alert(e)
+          alert(JSON.stringify(e));
           my.alert({
             title: 'test',
-            content: e
+            content: JSON.stringify(e)
           })
         }
         sessionStorage.setItem('inMiniProgram', true);

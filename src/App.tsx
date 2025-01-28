@@ -63,7 +63,7 @@ function App() {
         messageType: "selfie",
       });
 
-      MiniAppEvents.listenForMessage((observer) => {
+      MiniAppEvents.listenForMessage((_mutationRecords, observer) => {
         const message = MiniAppEvents.readMessage();
         if (message.type === "selfie") {
           observer.disconnect();

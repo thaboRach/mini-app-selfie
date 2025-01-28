@@ -59,7 +59,9 @@ class MiniApp {
     }
   }
 
-  listenForMessage(func: (observer: MutationObserver) => void) {
+  listenForMessage(
+    func: (mutationRecords: MutationRecord[], observer: MutationObserver) => void,
+  ) {
     this.send({
       messageType: "console",
       data: "listening...",
@@ -72,9 +74,12 @@ class MiniApp {
       subtree: true,
       characterData: true,
     };
-    const observer = new MutationObserver(function () {
-      func(observer);
-    });
+    // const observer = new MutationObserver(function () {
+    //   func(observer);
+    // });
+
+    const observer = new MutationObserver(func);
+
     observer.observe(targetNode, config);
   }
 

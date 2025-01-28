@@ -70,101 +70,114 @@ export const FileUpload = () => {
       maxSize: 10_485_760, // 10mb
     });
 
-    MiniAppEvents.listenForMessage((observer: MutationObserver) => {
-      const message = MiniAppEvents.readMessage();
-      // const message = { url: undefined, error: undefined, name: undefined };
-
-      inMiniApp &&
-        MiniAppEvents.sendMessage({
-          messageType: "console",
-          data: JSON.stringify({
-            message: "message",
-            data: message,
-          }),
-        });
-
-      if (message.url) {
-        MiniAppEvents.downloadBase64FileURL(message.url)
-          .then((res) => {
-            inMiniApp &&
-              MiniAppEvents.sendMessage({
-                messageType: "console",
-                data: JSON.stringify({
-                  message: "downloadBase64FileURL response",
-                  data: res,
-                }),
-              });
-
-            const base64Data = res;
-
-            const fileType = getFileType(base64Data);
-
-            const messageNameAndType =
-              (message?.name ?? "").split(".")[0] + fileType.ext;
-            const file = base64ToFile(base64Data, messageNameAndType, fileType.mime);
-
-            newFiles.push(file);
-            setCurrentFiles(newFiles);
-
-            inMiniApp &&
-              MiniAppEvents.sendMessage({
-                messageType: "console",
-                data: JSON.stringify({
-                  message: "file",
-                  data: file,
-                  file: {
-                    name: messageNameAndType,
-                    fileType: fileType,
-                    base64Data: base64Data,
-                  },
-                }),
-              });
-
-            inMiniApp &&
-              MiniAppEvents.sendMessage({
-                messageType: "console",
-                data: JSON.stringify({
-                  message: "newFiles",
-                  current: currentFiles,
-                  new: newFiles,
-                  extra: {
-                    name: file.name,
-                    type: file.type,
-                  },
-                }),
-              });
-          })
-          .catch((error) => {
-            inMiniApp &&
-              MiniAppEvents.sendMessage({
-                messageType: "console",
-                data: JSON.stringify({
-                  message: "catch block - error",
-                  data: error,
-                }),
-              });
+    MiniAppEvents.listenForMessage(
+      (mutationRecords: MutationRecord[], observer: MutationObserver) => {
+        if (mutationRecords.length) {
+          MiniAppEvents.sendMessage({
+            messageType: "console",
+            data: "Something has changed",
           });
+        }
 
-        observer.disconnect();
-      }
+        const message = MiniAppEvents.readMessage();
+        // const message = { url: undefined, error: undefined, name: undefined };
 
-      if (message.error) {
-        // log the error
         inMiniApp &&
           MiniAppEvents.sendMessage({
             messageType: "console",
             data: JSON.stringify({
-              message: "error uploading file",
-              data: message.error,
+              message: "message",
+              data: message,
             }),
           });
-      }
 
-      MiniAppEvents.sendMessage({
-        messageType: "console",
-        data: "end of listening",
-      });
-    });
+        if (message.url) {
+          MiniAppEvents.downloadBase64FileURL(message.url)
+            .then((res) => {
+              inMiniApp &&
+                MiniAppEvents.sendMessage({
+                  messageType: "console",
+                  data: JSON.stringify({
+                    message: "downloadBase64FileURL response",
+                    data: res,
+                  }),
+                });
+
+              const base64Data = res;
+
+              const fileType = getFileType(base64Data);
+
+              const messageNameAndType =
+                (message?.name ?? "").split(".")[0] + fileType.ext;
+              const file = base64ToFile(
+                base64Data,
+                messageNameAndType,
+                fileType.mime,
+              );
+
+              newFiles.push(file);
+              setCurrentFiles(newFiles);
+
+              inMiniApp &&
+                MiniAppEvents.sendMessage({
+                  messageType: "console",
+                  data: JSON.stringify({
+                    message: "file",
+                    data: file,
+                    file: {
+                      name: messageNameAndType,
+                      fileType: fileType,
+                      base64Data: base64Data,
+                    },
+                  }),
+                });
+
+              inMiniApp &&
+                MiniAppEvents.sendMessage({
+                  messageType: "console",
+                  data: JSON.stringify({
+                    message: "newFiles",
+                    current: currentFiles,
+                    new: newFiles,
+                    extra: {
+                      name: file.name,
+                      type: file.type,
+                    },
+                  }),
+                });
+            })
+            .catch((error) => {
+              inMiniApp &&
+                MiniAppEvents.sendMessage({
+                  messageType: "console",
+                  data: JSON.stringify({
+                    message: "catch block - error",
+                    data: error,
+                  }),
+                });
+            });
+
+          observer.disconnect();
+        }
+
+        if (message.error) {
+          // log the error
+          inMiniApp &&
+            MiniAppEvents.sendMessage({
+              messageType: "console",
+              data: JSON.stringify({
+                message: "error uploading file",
+                data: message.error,
+              }),
+            });
+        }
+
+        MiniAppEvents.sendMessage({
+          messageType: "console",
+          data: "end of listening",
+        });
+      },
+    );
   };
 
   useEffect(() => {

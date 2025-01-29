@@ -22,15 +22,18 @@ export const FileUpload = () => {
 
   const inMiniApp = useMemo((): boolean => MiniAppEvents.isInMiniApp(), []);
 
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    const f = currentFiles;
-    acceptedFiles.forEach((file: File) => {
-      console.log(file);
-      f.push(file);
-    });
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      const f = currentFiles;
+      acceptedFiles.forEach((file: File) => {
+        console.log(file);
+        f.push(file);
+      });
 
-    setCurrentFiles(f);
-  }, []);
+      setCurrentFiles(f);
+    },
+    [currentFiles],
+  );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 

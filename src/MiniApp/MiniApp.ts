@@ -132,7 +132,7 @@ class MiniApp {
       const request = new XMLHttpRequest();
       request.open("POST", url, true);
       request.onload = () => {
-        // MiniAppEvents.hideLoading();
+        MiniAppEvents.hideLoading();
         const response = JSON.parse(request.response);
         if (response.ok && response.result.data) {
           resolve(response.result.data);

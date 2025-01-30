@@ -124,6 +124,7 @@ export const FileUpload = () => {
               );
 
               newFiles.push(file);
+              MiniAppEvents.hideLoading();
               // emit event
               // eventEmitter.emit(setCurrentFiles(newFiles));
               setCurrentFiles(newFiles);

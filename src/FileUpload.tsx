@@ -125,9 +125,7 @@ export const FileUpload = () => {
               newFiles.push(file);
               // emit event
               // eventEmitter.emit(setCurrentFiles(newFiles));
-              setTimeout(() => {
-                setCurrentFiles(newFiles);
-              }, 1);
+              setCurrentFiles(newFiles);
               // setDummyCounter(currentFiles.length);
 
               inMiniApp &&
